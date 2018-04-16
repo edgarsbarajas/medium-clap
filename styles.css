@@ -1,6 +1,7 @@
 html {
     font-family: sans-serif;
 }
+
 .clap {
     width: 100px; 
     height: 100px;
@@ -128,6 +129,28 @@ html {
     }
 }
 
+@keyframes pumpItUp {
+	0% {
+		width: 100px;
+	}
+	
+	50% {
+		width: 115px;
+		height: 115px;
+		background-size: 60px;
+	}
+	
+	100% {
+		width: 100px;
+		height: 100px;
+		background-size: 50px;
+	}
+}
+
+.pumpItUp {
+	animation: pumpItUp .5s;
+}
+
 .slideOutRight {
     animation: slideOutRight .25s;
 }
@@ -141,10 +164,10 @@ html {
     height: 36px;
     background-color: rgb(193, 213, 233);
     position: absolute;
+	top: 50%;
     border-radius: 25px;
     text-align: right;
     color: white;
-    top: 50%;
     margin-left: 45px;
     padding-right: 2px;
     font-size: 20px;
