@@ -8,46 +8,83 @@
     <title>Medium Clap</title>
 </head>
 <body>
-    <div class="clap-count horiz-center">120</div>
-    <div class="user-clap-count-wrapper horiz-center hide goUp"><span class="user-clap-count horiz-center">0</span></div>
-    <a href="#" class="clap horiz-center"></a> 
-    <a href="#" class="remove horiz-center hide"><span>✕</span></a>
-    
+
+	<div class="clap-count horiz-center">120</div>
+	<div class="user-clap-count-wrapper horiz-center hide goUp"><span class="user-clap-count horiz-center">0</span></div>
+	<a href="#" class="clap horiz-center"></a> 
+	<a href="#" class="remove horiz-center hide"><span>✕</span></a>
+	
     <script>
         var clap = document.getElementsByClassName("clap")[0];
         var clapCount = document.getElementsByClassName("clap-count")[0];
-        var clapCountInt = parseInt(clapCount.innerHTML);
+        var originalClapCountInt = parseInt(clapCount.innerHTML);
         var userClapCountWrapper = document.getElementsByClassName("user-clap-count-wrapper")[0];
         var userClapCount = document.getElementsByClassName("user-clap-count")[0];
         var currentUserClapCount = 0;
         var clapped = false;
         var removeClaps = document.getElementsByClassName("remove")[0];
         var onRemove = false;
+		var doneClapping = false;
 
-        function hideRemove(){
-            setTimeout(function(){
-                removeClaps.classList.remove("slideOutRight");
-                removeClaps.classList.add("hide");
-                removeClaps.classList.add("slideInLeft");
-            }, 1000);
+        function hideRemoveButton(){
+			// transition from the entering animation to the leaving animation
+			removeClaps.classList.add("slideInLeft");
+            removeClaps.classList.remove("slideOutRight");
+			
+			// hide the remove button after the animation plays
+            setTimeout(function(){	
+                removeClaps.classList.add("hide");    
+            }, 250);
         }
+		
+		function showRemoveButton(){
+			removeClaps.classList.remove("slideInLeft");
+            removeClaps.classList.remove("hide");
+            removeClaps.classList.add("slideOutRight");
+		}
+		
+		removeClaps.onclick = function(){
+			// set clapped to false, since it as the user has never clapped before
+			clapped = false;
+			
+			// user claps go back to 0
+			currentUserClapCount = 0;
+			
+			// total claps count goes back to the original int
+			clapCount.innerHTML = originalClapCountInt
+			
+			//change background image to non-clapped version
+			clap.style.backgroundImage = "url(thizz.png)";
+			
+			removeClaps.classList.add("hide");
+		}
 
         clap.onmouseenter = function(){
+			onClapButton = true;
             if(!clapped){
                 clap.classList.add("clapGlow");
             } else {
                 setTimeout(function(){
-                    removeClaps.classList.remove("slideInLeft");
-                    removeClaps.classList.remove("hide");
-                    removeClaps.classList.add("slideOutRight");
+                    showRemoveButton();
                 }, 1000);
             }
         }
 
         clap.onmouseleave = function(){
+			onClapButton = false;
             if(!clapped){
+				// the clap should not glow when youre not hoving over it
                 clap.classList.remove("clapGlow");
-            }
+            } else { // user has clapped
+				// give the user half a second to enter the remove button
+				setTimeout(function(){
+					if(onRemove){
+						console.log("user on remove button");
+					} else {
+						hideRemoveButton();
+					}
+				}, 500)
+			}
 
             // dont hide the remove button until you leave the clap or leave the remove button
         }
@@ -58,14 +95,22 @@
 
         removeClaps.onmouseleave = function(){
             onRemove = false;
+			
             // HIDE THE REMOVE BUTTON
-            hideRemove();
+			setTimeout(function(){
+				hideRemoveButton();
+			}, 1000) 
         }
-
 
         clap.onclick = function(){
             // user has clapped
+			hideRemoveButton();
             clapped = true;
+			// doneClapping = false;
+			
+			// pump it up 
+			clap.classList.add("pumpItUp");
+			
 
             // remove the glowing css animation effect since it has already been clapped
             clap.classList.remove("clapGlow");
@@ -75,7 +120,7 @@
 
             // increment the total clap count
             currentUserClapCount+=1;
-            clapCount.innerHTML = clapCountInt+currentUserClapCount;
+            clapCount.innerHTML = originalClapCountInt+currentUserClapCount;
 
             // change the background image if the user's clap count is 1
             // no need to change it again if its above 1
@@ -95,7 +140,20 @@
                 userClapCountWrapper.classList.add("hide");
                 clapCount.classList.remove("hide");
             }, 1250);
-            
+			
+			// check if the user is still hovered in the clap button
+			// if user is still hovered, show the remove button
+			setTimeout(function(){
+				// show the remove button if still hovered over clap button
+				if(onClapButton){
+					showRemoveButton();
+				}
+			}, 1500);
+			
+			// remove the pmp it up animation to keep it going if the user is continuously pressing it
+			setTimeout(function(){
+				clap.classList.remove("pumpItUp");
+			}, 500)
         }
     </script>
 </body>
