@@ -1,0 +1,166 @@
+html {
+    font-family: sans-serif;
+}
+.clap {
+    width: 100px; 
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: auto; margin-right: auto;
+    transform: translate(-50%, -50%);
+    background: url('thizz.png'), #fff;
+    background-size: 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 3px lightgray solid;
+    box-sizing: border-box;
+    border-radius: 100px;
+}
+
+.clap:hover {
+    border: 3px solid rgba(63, 127, 191, 1);
+    animation-fill-mode: backwards;
+}
+
+.clapGlow {
+    animation: clapGlow 2s ease-out infinite;
+}
+
+@keyframes clapGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(63, 127, 191, 1);
+    }
+
+    50% {
+        box-shadow: 0 0 10px 15px rgba(63, 127, 191, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 10px 15px rgba(63, 127, 191, 0);
+    }
+}
+
+.horiz-center {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.clap-count {
+    top: 40%;
+    color: gray;
+}
+
+.user-clap-count-wrapper {
+    top: 35%;
+    background-color: rgb(63, 127, 191);
+    color:white;
+    width: 40px;
+    height: 40px;
+    border-radius: 25px;
+    animation-fill-mode: forwards;
+}
+
+.user-clap-count {
+    display: inline-block;
+    top: 50%;
+    font-size: 12px;
+}
+
+.hide {
+    display: none;
+}
+
+.goUp {
+    animation: clappedCount 1.25s ease-out;
+}
+
+@keyframes clappedCount {
+    0% {
+        transform: translate(-50%, -25%) scale(.9);
+        opacity: 1;
+    }
+
+    5% {
+        transform: translate(-50%, -55%) scale(1);
+    }
+
+    15% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+
+    75% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+
+    }
+
+    100%{
+        opacity: 0;
+        transform: translate(-50%, -200%);
+    }
+}
+
+@keyframes slideOutRight {
+    0% {
+        transform: translate(-90%, -50%);
+    }
+
+    100% {
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes slideInLeft {
+    0% {
+        transform: translate(-50%, -50%);
+    }
+
+    100% {
+        transform: translate(-90%, -50%);
+    }
+}
+
+.slideOutRight {
+    animation: slideOutRight .25s;
+}
+
+.slideInLeft {
+    animation: slideInLeft .25s;
+}
+
+.remove {
+    width: 75px;
+    height: 36px;
+    background-color: rgb(193, 213, 233);
+    position: absolute;
+    border-radius: 25px;
+    text-align: right;
+    color: white;
+    top: 50%;
+    margin-left: 45px;
+    padding-right: 2px;
+    font-size: 20px;
+    z-index: -1;
+    color: white;
+    animation-fill-mode: backwards;
+}
+
+.remove:hover {
+    color: gray;
+}
+
+.remove span {
+    position: relative;
+    display: inline-block;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-right: 10px;
+}
